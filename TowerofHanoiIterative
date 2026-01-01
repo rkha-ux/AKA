@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+void moveDisk(char from, char to, int disk, int &count) {
+    count++;
+    cout << "Move " << count << ": Disk " << disk
+         << " from " << from << " to " << to << endl;
+}
+
+void towerOfHanoiIterative(int n) {
+    char source = 'A', help = 'B', destination = 'C';
+
+    if (n % 2 == 0) {
+        char temp = destination;
+        destination = help;
+        help = temp;
+    }
+
+    int totalMoves = (1 << n) - 1;
+    int count = 0;
+
+    for (int i = 1; i <= totalMoves; i++) {
+        if (i % 3 == 1)
+            moveDisk(source, destination, (i % n) + 1, count);
+        else if (i % 3 == 2)
+            moveDisk(source, help, (i % n) + 1, count);
+        else
+            moveDisk(help, destination, (i % n) + 1, count);
+    }
+
+    cout << "\nTotal moves: " << count << endl;
+}
+
+int main() {
+    int n;
+    cout << "Enter number of disks: ";
+    cin >> n;
+
+    cout << "\nIterative Solution:\n";
+    towerOfHanoiIterative(n);
+
+    return 0;
+}
+
