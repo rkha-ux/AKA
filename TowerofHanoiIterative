@@ -1,44 +1,44 @@
-#include <iostream>
-using namespace std;
+const rod = [ "S", "A", "D" ];
+const stacks = [ [], [], [] ];
 
-void moveDisk(char from, char to, int disk, int &count) {
-    count++;
-    cout << "Move " << count << ": Disk " << disk
-         << " from " << from << " to " << to << endl;
+function moveDisk(a, b)
+{
+    if (stacks[b].length === 0
+        || (stacks[a].length > 0
+            && stacks[a][stacks[a].length - 1]
+                   < stacks[b][stacks[b].length - 1])) {
+        console.log(`Move disk ${
+            stacks[a][stacks[a].length - 1]} from rod ${
+            rod[a]} to rod ${rod[b]}`);
+        stacks[b].push(stacks[a].pop());
+    }
+    else {
+        moveDisk(b, a);
+    }
 }
 
-void towerOfHanoiIterative(int n) {
-    char source = 'A', help = 'B', destination = 'C';
+function towerOfHanoi(n)
+{
+    console.log(`Tower of Hanoi for ${n} disks:\n`);
 
-    if (n % 2 == 0) {
-        char temp = destination;
-        destination = help;
-        help = temp;
-    }
+    let src = 0, aux = 1, dest = 2;
+    for (let i = n; i > 0; i--)
+        stacks[src].push(i);
 
-    int totalMoves = (1 << n) - 1;
-    int count = 0;
+    let totalMoves = (1 << n) - 1;
+    if (n % 2 === 0)
+        [aux, dest] = [ dest, aux ];
 
-    for (int i = 1; i <= totalMoves; i++) {
-        if (i % 3 == 1)
-            moveDisk(source, destination, (i % n) + 1, count);
-        else if (i % 3 == 2)
-            moveDisk(source, help, (i % n) + 1, count);
+    for (let i = 1; i <= totalMoves; i++) {
+        if (i % 3 === 0)
+            moveDisk(aux, dest);
+        else if (i % 3 === 1)
+            moveDisk(src, dest);
         else
-            moveDisk(help, destination, (i % n) + 1, count);
+            moveDisk(src, aux);
     }
-
-    cout << "\nTotal moves: " << count << endl;
 }
 
-int main() {
-    int n;
-    cout << "Enter number of disks: ";
-    cin >> n;
-
-    cout << "\nIterative Solution:\n";
-    towerOfHanoiIterative(n);
-
-    return 0;
-}
-
+// Example: Run Tower of Hanoi for 3 disks
+let n = 3;
+towerOfHanoi(n);
