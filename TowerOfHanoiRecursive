@@ -1,28 +1,49 @@
-// C++ recursive function to
-// solve tower of hanoi puzzle
-#include <bits/stdc++.h>
-using namespace std;
+import sys
+import time
+import matplotlib.pyplot as plt
 
-void towerOfHanoi(int n, char from_rod, char to_rod,
-                  char aux_rod)
-{
-    if (n == 0) {
-        return;
-    }
-    towerOfHanoi(n - 1, from_rod, aux_rod, to_rod);
-    cout << "Move disk " << n << " from rod " << from_rod
-         << " to rod " << to_rod << endl;
-    towerOfHanoi(n - 1, aux_rod, to_rod, from_rod);
-}
+# Increase recursion limit
+sys.setrecursionlimit(10000)
 
-// Driver code
-int main()
-{
-    int N = 3;
+# Recursive Tower of Hanoi
+def hanoi_recursive(n, source, dest, aux):
+    if n <= 1:
+        return
+    hanoi_recursive(n - 1, source, aux, dest)
+    hanoi_recursive(n - 1, aux, dest, source)
 
-    // A, B and C are names of rods
-    towerOfHanoi(N, 'A', 'C', 'B');
-    return 0;
-}
 
-// This is code is contributed by rathbhupendra
+# Iterative Tower of Hanoi
+def hanoi_iterative(n):
+    total_moves = (1 << n) - 1  # 2^n - 1
+    for _ in range(total_moves):
+        pass  # simulate moves only
+
+
+
+# Measure execution time
+n_values = list(range(1, 16))  # keep n small (exponential growth)
+recursive_times = []
+iterative_times = []
+
+for n in n_values:
+    start = time.time()
+    hanoi_recursive(n, 'A', 'C', 'B')
+    recursive_times.append(time.time() - start)
+
+    start = time.time()
+    hanoi_iterative(n)
+    iterative_times.append(time.time() - start)
+
+
+# Plot graph
+plt.figure()
+plt.plot(n_values, recursive_times, marker='o', label='Recursive Tower of Hanoi')
+plt.plot(n_values, iterative_times, marker='o', label='Iterative Tower of Hanoi')
+
+plt.xlabel("Input Size (Number of Disks n)")
+plt.ylabel("Execution Time (seconds)")
+plt.title("Tower of Hanoi: Input Size vs Running Time")
+plt.legend()
+plt.grid(True)
+plt.show()
