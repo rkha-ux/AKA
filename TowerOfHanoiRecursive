@@ -22,7 +22,7 @@ def hanoi_iterative(n):
 
 
 # Measure execution time
-n_values = list(range(1, 16))  # keep n small (exponential growth)
+n_values = list(range(1, 10000))
 recursive_times = []
 iterative_times = []
 
