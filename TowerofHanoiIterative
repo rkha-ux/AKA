@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <cmath>
+
+using namespace std;
+
+// Function to move a disk legally between two stacks
+void moveBetween(stack<int> &src, stack<int> &dest, char s, char d) {
+    if (!src.empty() && (dest.empty() || src.top() < dest.top())) {
+        cout << "Move disk " << src.top() << " from " << s << " to " << d << endl;
+        dest.push(src.top());
+        src.pop();
+    } else {
+        cout << "Move disk " << dest.top() << " from " << d << " to " << s << endl;
+        src.push(dest.top());
+        dest.pop();
+    }
+}
+
+void towerOfHanoi(int n) {
+    stack<int> S, A, D;
+    char s = 'S', a = 'A', d = 'D';
+
+    // If n is even, the logic requires swapping Auxiliary and Destination
+    if (n % 2 == 0) swap(a, d);
+
+    // Fill Source Rod
+    for (int i = n; i >= 1; i--) S.push(i);
+
+    int total_moves = pow(2, n) - 1;
+
+    for (int i = 1; i <= total_moves; i++) {
+        if (i % 3 == 1)      moveBetween(S, D, s, d);
+        else if (i % 3 == 2) moveBetween(S, A, s, a);
+        else                 moveBetween(A, D, a, d);
+    }
+}
+
+int main() {
+    int n = 3; // Example with 3 disks
+    towerOfHanoi(n);
+    return 0;
+}
