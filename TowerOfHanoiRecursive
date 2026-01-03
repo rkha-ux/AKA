@@ -12,17 +12,14 @@ def hanoi_recursive(n, source, dest, aux):
     hanoi_recursive(n - 1, source, aux, dest)
     hanoi_recursive(n - 1, aux, dest, source)
 
-
 # Iterative Tower of Hanoi
 def hanoi_iterative(n):
     total_moves = (1 << n) - 1  # 2^n - 1
     for _ in range(total_moves):
         pass  # simulate moves only
 
-
-
 # Measure execution time
-n_values = list(range(1, 10000))
+n_values = list(range(1, 23)) 
 recursive_times = []
 iterative_times = []
 
@@ -35,15 +32,15 @@ for n in n_values:
     hanoi_iterative(n)
     iterative_times.append(time.time() - start)
 
-
 # Plot graph
-plt.figure()
+plt.figure(figsize=(10, 6))
 plt.plot(n_values, recursive_times, marker='o', label='Recursive Tower of Hanoi')
-plt.plot(n_values, iterative_times, marker='o', label='Iterative Tower of Hanoi')
+plt.plot(n_values, iterative_times, marker='x', label='Iterative Tower of Hanoi')
 
 plt.xlabel("Input Size (Number of Disks n)")
 plt.ylabel("Execution Time (seconds)")
 plt.title("Tower of Hanoi: Input Size vs Running Time")
 plt.legend()
 plt.grid(True)
+plt.yscale('linear')
 plt.show()
